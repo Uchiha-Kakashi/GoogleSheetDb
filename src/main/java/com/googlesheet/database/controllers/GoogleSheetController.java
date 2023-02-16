@@ -1,12 +1,8 @@
 package com.googlesheet.database.controllers;
 
-import com.googlesheet.database.GoogleSheetDatabaseApplication;
-import com.googlesheet.database.models.UserDetailsModel;
-
 import com.googlesheet.database.services.GoogleSheetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.io.*;
 
 @RestController
-//@RequestMapping("/googleSheet")
+@RequestMapping("/googleSheetDb")
 public class GoogleSheetController {
 
     private final ResourceLoader resourceLoader;
@@ -25,6 +21,7 @@ public class GoogleSheetController {
     public GoogleSheetController(ResourceLoader resourceLoader){
         this.resourceLoader = resourceLoader;
     }
+
     @GetMapping("/displayForm")
     public String getFormPage() throws IOException {
         Resource resource = resourceLoader.getResource("classpath:/static/form.html");
@@ -34,7 +31,6 @@ public class GoogleSheetController {
         return htmlContent;
     }
 
-    @CrossOrigin
     @GetMapping("/saveDetails")
     public void saveDetails(@RequestParam("name") String name, @RequestParam("mobile") String mobNum){
         googleSheetService.saveDetails(name, mobNum);
